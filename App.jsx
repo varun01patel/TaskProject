@@ -43,6 +43,7 @@ const App = () => {
       <View style={styles.carouselContainer}>
         <SavingsCarousel data={data} />
       </View>
+      <Text style={styles.disclaimer}>This data is fetched from my previous deployed app.</Text>
     </View>
   );
 };
@@ -64,5 +65,15 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     flex: 1,
+  },
+  disclaimer: {
+    textAlign: 'center',
+    marginVertical: 30,
+    color: '#888',
+    fontSize: 14,
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
   },
 });
