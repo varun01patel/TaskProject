@@ -1,21 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SavingsCarousel from './src/Component/SavingsCarousel';
-const savingsData = require('./SavingData.json');
 
 const App = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setData(savingsData.accounts);
-    setIsLoading(false);
+    fetch('https://raw.githubusercontent.com/varun01patel/TaskProject/main/SavingData.json')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.accounts);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setError('Failed to load data');
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>{error}</Text>
       </View>
     );
   }
@@ -44,7 +61,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 16,
     color: '#008c85',
-    
   },
   carouselContainer: {
     flex: 1,
